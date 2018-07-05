@@ -1,0 +1,23 @@
+{
+  "authors" : [
+    "Jack Kuan"
+  ],
+  "build-depends" : [ ],
+  "depends" : [
+    "Browser::Open"
+  ],
+  "description" : "Convenience functions to help with introspecting objects from Perl6 REPL.",
+  "license" : "Artistic-2.0",
+  "name" : "P6Repl::Helpers",
+  "perl" : "6.c",
+  "provides" : {
+    "P6Repl::Helpers" : "lib/P6Repl/Helpers.pm6"
+  },
+  "resources" : [ ],
+  "source-url" : "",
+  "tags" : [ ],
+  "test-depends" : [
+    "Test::Output"
+  ],
+  "version" : "0.0.1"
+}
