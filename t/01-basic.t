@@ -4,7 +4,7 @@ use Test::Output;
 
 use P6Repl::Helpers;
 
-plan 7;
+plan 8;
 
 module MyModule {
     our $myvar = 123;
@@ -48,5 +48,6 @@ is (output-from { ls MyModule::MyClass, :long }).lines.join("\n"),
    "testing ll class";
 
 lives-ok { ll CORE };
+lives-ok { ls CORE, :value(Class-ish) };
 
 done-testing;

@@ -155,7 +155,7 @@ multi sub ls(
   Bool:D :$all    = False,
   Bool:D :$local  = !$all,
   Bool:D :$long   = False,
-  Mu :$take is raw where ! .DEFINITE || $_ ~~ (Int|Iterable),
+  Mu :$take is raw,
   Bool:D :$gather = $take.DEFINITE,
   Bool:D :$numbered = False,
 
