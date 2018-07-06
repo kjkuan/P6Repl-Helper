@@ -16,7 +16,13 @@
   },
   "resources" : [ ],
   "source-url" : "https://github.com/kjkuan/P6Repl-Helpers",
-  "tags" : [ "PERL6", "REPL", "INTROSPECTION", "TOOL", "HELP"],
+  "tags" : [
+    "PERL6",
+    "REPL",
+    "INTROSPECTION",
+    "TOOL",
+    "HELP"
+  ],
   "test-depends" : [
     "Test::Output"
   ],

@@ -71,6 +71,11 @@ P6Repl::Helpers provides functions to help you explore Perl6 packages
 
 Jack Kuan <kjkuan@gmail.com>
 
+=head1 CONTRIBUTING
+
+This is my first Perl6 module, written mainly to learn Perl6;
+therefore, any corrections/suggestions or help is highly apprecicated!
+
 =head1 COPYRIGHT AND LICENSE
 
 Copyright 2018 Jack Kuan

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kjkuan/P6Repl-Helpers.svg?branch=master)](https://travis-ci.org/kjkuan/P6Repl-Helpers)
+
 NAME
 ====
 
@@ -68,10 +70,7 @@ Jack Kuan <kjkuan@gmail.com>
 CONTRIBUTING
 ============
 
-GitHub repo is at: https://github.com/kjkuan/P6Repl-Helpers
-
-This is my first Perl6 module, written mainly to learn Perl6.
-Therefore, any corrections/suggestions or help is highly apprecicated!
+This is my first Perl6 module, written mainly to learn Perl6; therefore, any corrections/suggestions or help is highly apprecicated!
 
 COPYRIGHT AND LICENSE
 =====================
