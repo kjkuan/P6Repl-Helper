@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/kjkuan/P6Repl-Helpers.svg?branch=master)](https://travis-ci.org/kjkuan/P6Repl-Helpers)
+[![Build Status](https://travis-ci.org/kjkuan/P6Repl-Helper.svg?branch=master)](https://travis-ci.org/kjkuan/P6Repl-Helper)
 
 NAME
 ====
