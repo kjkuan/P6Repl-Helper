@@ -9,13 +9,13 @@
   ],
   "description" : "Convenience functions to help with introspecting objects from Perl6 REPL.",
   "license" : "Artistic-2.0",
-  "name" : "P6Repl::Helpers",
+  "name" : "P6Repl::Helper",
   "perl" : "6.c",
   "provides" : {
-    "P6Repl::Helpers" : "lib/P6Repl/Helpers.pm6"
+    "P6Repl::Helper" : "lib/P6Repl/Helper.pm6"
   },
   "resources" : [ ],
-  "source-url" : "https://github.com/kjkuan/P6Repl-Helpers",
+  "source-url" : "https://github.com/kjkuan/P6Repl-Helper",
   "tags" : [
     "PERL6",
     "REPL",

@@ -2,7 +2,7 @@ use v6.c;
 use Test;
 use Test::Output;
 
-use P6Repl::Helpers;
+use P6Repl::Helper;
 
 plan 8;
 

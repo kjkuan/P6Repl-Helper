@@ -1,31 +1,31 @@
 use v6.c;
-unit module P6Repl::Helpers:ver<0.0.1>;
+unit module P6Repl::Helper:ver<0.0.1>;
 
 =begin pod
 
 =head1 NAME
 
-P6Repl::Helpers - Convenience functions to help with introspecting objects from Perl6 REPL.
+P6Repl::Helper - Convenience functions to help with introspecting objects from Perl6 REPL.
 
 =head1 SYNOPSIS
 
 =begin code
 
 # Install it
-$ zef install P6Repl::Helpers
+$ zef install P6Repl::Helper
 
 # Run the Perl6 REPL with it
-$ perl6 -M P6Repl::Helpers
+$ perl6 -M P6Repl::Helper
 
 # Or, load it from the REPL
 $ perl6
-> use P6Repl::Helpers;
+> use P6Repl::Helper;
 
 =end code
 
 =head1 DESCRIPTION
 
-P6Repl::Helpers provides functions to help you explore Perl6 packages
+P6Repl::Helper provides functions to help you explore Perl6 packages
 (package/module/class/role/grammar) from the REPL.
 
 =head1 EXAMPLES

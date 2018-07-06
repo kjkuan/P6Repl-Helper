@@ -3,25 +3,25 @@
 NAME
 ====
 
-P6Repl::Helpers - Convenience functions to help with introspecting objects from Perl6 REPL.
+P6Repl::Helper - Convenience functions to help with introspecting objects from Perl6 REPL.
 
 SYNOPSIS
 ========
 
     # Install it
-    $ zef install P6Repl::Helpers
+    $ zef install P6Repl::Helper
 
     # Run the Perl6 REPL with it
-    $ perl6 -M P6Repl::Helpers
+    $ perl6 -M P6Repl::Helper
 
     # Or, load it from the REPL
     $ perl6
-    > use P6Repl::Helpers;
+    > use P6Repl::Helper;
 
 DESCRIPTION
 ===========
 
-P6Repl::Helpers provides functions to help you explore Perl6 packages (package/module/class/role/grammar) from the REPL.
+P6Repl::Helper provides functions to help you explore Perl6 packages (package/module/class/role/grammar) from the REPL.
 
 EXAMPLES
 ========
