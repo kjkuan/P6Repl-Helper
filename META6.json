@@ -15,7 +15,7 @@
   },
   "resources" : [ ],
   "source-url" : "",
-  "tags" : [ ],
+  "tags" : [ "PERL6", "REPL", "INTROSPECTION", "TOOL", "HELP"],
   "test-depends" : [
     "Test::Output"
   ],

@@ -65,6 +65,14 @@ AUTHOR
 
 Jack Kuan <kjkuan@gmail.com>
 
+CONTRIBUTING
+============
+
+GitHub repo is at: https://github.com/kjkuan/P6Repl-Helpers
+
+This is my first Perl6 module, written mainly to learn Perl6.
+Therefore, any corrections/suggestions or help is highly apprecicated!
+
 COPYRIGHT AND LICENSE
 =====================
 
