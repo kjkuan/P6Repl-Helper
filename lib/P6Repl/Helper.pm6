@@ -1,5 +1,5 @@
 use v6.c;
-unit module P6Repl::Helper:ver<0.0.1>;
+unit module P6Repl::Helper:ver<0.0.2>;
 
 =begin pod
 
