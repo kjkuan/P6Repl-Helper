@@ -4,7 +4,7 @@ use Test::Output;
 
 use P6Repl::Helper;
 
-plan 8;
+plan 9;
 
 module MyModule {
     our $myvar = 123;
@@ -19,7 +19,7 @@ module MyModule {
     }
 }
 
-is (output-from { ls MyModule::MyClass, :name(/b/) }).lines, "my-method-b", "Filter by name works";
+is (output-from { ls MyModule::MyClass, :name(/b/) }).lines, "&my-method-b", "Filter by name works";
 
 ok (ls MyModule::MyClass, :take(1..2)) eqv
    (MyModule::MyClass.^lookup('my-method-a'),
@@ -46,6 +46,14 @@ is (output-from { ls MyModule::MyClass, :long }).lines.join("\n"),
     | do ("multi method {.name}" ~ .signature.gist for MyModule::MyClass.^lookup("my-multi").candidates)
    ).join("\n"),
    "testing ll class";
+
+
+is (output-from { ll &substr }).lines.join("\n") ~ "\n", q:to/END/, "testing ll a sub";
+    proto sub substr($, $?, $?, *%)
+    multi sub substr(\what)
+    multi sub substr(\what, \from)
+    multi sub substr(\what, \from, \chars)
+    END
 
 lives-ok { ll CORE };
 lives-ok { ls CORE, :value(Class-ish) };

@@ -115,33 +115,50 @@ our subset Class-ish is export where {
 
 multi sub ns-iterator($obj where $_ ~~ Package|Module, *%opts --> Seq) {
     # .pairs works even when iterating CORE, which contains IterationEnd.
-    gather given $obj { .take for .WHO.pairs }
+    gather for $obj.WHO.pairs -> $pairs (:$key, :$value) {
+        $key.starts-with('&')
+            ?? routine-candidates($value, |%opts)
+            !! take $pairs;
+    }
 }
 
 multi sub ns-iterator(Class-ish $obj, *%opts --> Seq) {
     my $long = %opts<long>:delete;
-
     gather {
         given $obj { .take for .WHO.pairs }
         given $obj {
             for .^methods(|%opts) {
                 next if $_ ~~ ForeignCode;
-                take .name => $_;
-                if $long  && .?is_dispatcher {
-                    take (.name => $_) for .candidates;
-                }
+                routine-candidates($_, :$long, |%opts);
             }
             .take for .&anonymous-methods(:local(%opts<local>));
         }
     }
 }
 
+multi sub ns-iterator(Routine:D $r, *%opts --> Seq) {
+    gather routine-candidates($r, |%opts);
+}
+
+
 multi sub ns-iterator($obj, *%opts --> Seq) {
     gather take $obj.?name // '' => $obj;
 }
 
+
+sub routine-candidates(Routine:D $r, *%opts) {
+    given $r {
+        take .name => $_;
+        if %opts<long> && .?is_dispatcher {
+            take (.name => $_) for .candidates;
+        }
+    }
+}
+
 sub anonymous-methods(Class-ish $obj, :$local=True) {
-    my @pairs := do .HOW.method_table(Nil) for $obj.^mro[$local ?? 0 !! 0..^*-1];
+    my @pairs := do .HOW.method_table(Nil) for (
+        try { $obj.^mro[$local ?? 0 !! 0..^*-1] } // ()
+    );
 
     gather for flat @pairs {
         # skip private methods
@@ -227,7 +244,7 @@ multi sub stringify-package-entry(
             }
             $entry ~= "{.^name.lc.subst(/\+.+$/, '')} "
         }
-        $entry ~= $long ?? $name.subst(/^\&/, '') !! $name;
+        $entry ~= $long ?? $name.subst(/^\&/, '') !! "&$name";
         try $entry ~= .signature.gist if $long;
     }
     return $entry;
