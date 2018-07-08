@@ -2,5 +2,9 @@ Revision history for P6Repl-Helper
 
 {{$NEXT}}
 
+0.0.2  2018-07-08T16:22:24-04:00
+    - Fix the bug of not showing candidates for subs in a module when :long
+      is true.
+
 0.0.1  2018-07-05T22:20:44-04:00
     - Initial version
