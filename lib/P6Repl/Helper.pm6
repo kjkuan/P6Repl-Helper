@@ -37,7 +37,7 @@ P6Repl::Helper provides functions to help you explore Perl6 packages
 > ls CORE, :name(/str/)
 
 # Show all s* subs and their multi candidates if any.
-> ls CORE, :name(/^\&s/), :long
+> ls CORE, :name(/^s/), :long
 
 # You can also filter on the objects themselves.
 # E.g., show only CORE types(class, role, or grammar)
@@ -45,7 +45,7 @@ P6Repl::Helper provides functions to help you explore Perl6 packages
 > ls CORE, :value(Class-ish)
 
 # Show only non-sub instances in CORE
-> ls CORE, :name({$^k !~~ /^\&/}), :value({$^obj.DEFINITE})
+> ls CORE, :value({$^obj.DEFINITE && $^obj !~~ Sub})
 
 # Show Str's methods that begins with 'ch'. 'll' is like 'ls' but with :long.
 > ll Str, :name(/^ch/)
@@ -56,15 +56,15 @@ P6Repl::Helper provides functions to help you explore Perl6 packages
 > ll Str, :name(/fmt/), :all
 
 # Specifying :gather returns a Seq of Pairs
-> ls CORE, :name(/^\&sp/), :gather ==> { .value.&ls for $_ }()
+> ls CORE, :name(/^sp/), :gather ==> { .value.&ls for $_ }()
 
 
 # Once you get a hold of a sub or a method, you can use &doc to open its
 # documentation in a browser.
 > doc &substr
 
-> ls CORE, :name(/^\&s/), :numbered
-> doc (ls CORE, :name(/^\&s/), :take(21))
+> ls CORE, :name(/^s/), :numbered
+> doc (ls CORE, :name(/^s/), :take(21))
 =end code
 
 =head1 AUTHOR
@@ -90,9 +90,6 @@ use Browser::Open;
 %*ENV<P6_REPL_HELPERS_DOC_BASE_URL> //= "https://docs.perl6.org";
 
 
-our subset Package is export where !.DEFINITE && .HOW ~~ Metamodel::PackageHOW;
-our subset Module is export where !.DEFINITE && .HOW ~~ Metamodel::ModuleHOW;
-
 # Package-ish things that can have methods
 my @class-ish = do given Metamodel { $_.WHO<
     ClassHOW
@@ -103,15 +100,47 @@ my @class-ish = do given Metamodel { $_.WHO<
     ParametricRoleGroupHOW
 > }
 
+our subset Package is export where {
+    !.DEFINITE && (
+        (try .HOW ~~ Metamodel::PackageHOW) // False ||
+        (.HOW.^name ~~ /^('Perl6::Metamodel::' | NQP) PackageHOW/)
+    )
+}
+
+our subset Module is export where {
+    !.DEFINITE && (
+        (try .HOW ~~ Metamodel::ModuleHOW) // False ||
+        (.HOW.^name ~~ /^('Perl6::Metamodel::' | NQP) ModuleHOW/)
+    )
+}
 
 our subset Class-ish is export where {
     !.DEFINITE && (
         (try .HOW ~~ any @class-ish) // False ||
-        # (because some .HOW's in CORE has no matching ACCEPT's!)
         (.HOW.^name ~~ /^('Perl6::Metamodel::' | NQP) ClassHOW/)
     )
 }
 
+sub routine-candidates(Routine:D $r, *%opts) {
+    given $r {
+        take .name => $_;
+        if %opts<long> && .?is_dispatcher {
+            take (.name => $_) for .candidates;
+        }
+    }
+}
+
+sub anonymous-methods(Class-ish $obj, :$local=True) {
+    my @pairs := do .HOW.method_table(Nil) for (
+        try { $obj.^mro[$local ?? 0 !! 0..^*-1] } // ()
+    );
+
+    gather for flat @pairs {
+        # skip private methods
+        next if .key.starts-with('!');
+        take $_ if .value ~~ ForeignCode;
+    }
+}
 
 multi sub ns-iterator($obj where $_ ~~ Package|Module, *%opts --> Seq) {
     # .pairs works even when iterating CORE, which contains IterationEnd.
@@ -145,27 +174,6 @@ multi sub ns-iterator($obj, *%opts --> Seq) {
     gather take $obj.?name // '' => $obj;
 }
 
-
-sub routine-candidates(Routine:D $r, *%opts) {
-    given $r {
-        take .name => $_;
-        if %opts<long> && .?is_dispatcher {
-            take (.name => $_) for .candidates;
-        }
-    }
-}
-
-sub anonymous-methods(Class-ish $obj, :$local=True) {
-    my @pairs := do .HOW.method_table(Nil) for (
-        try { $obj.^mro[$local ?? 0 !! 0..^*-1] } // ()
-    );
-
-    gather for flat @pairs {
-        # skip private methods
-        next if .key.starts-with('!');
-        take $_ if .value ~~ ForeignCode;
-    }
-}
 
 
 

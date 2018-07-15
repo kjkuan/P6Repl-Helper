@@ -33,7 +33,7 @@ EXAMPLES
     > ls CORE, :name(/str/)
 
     # Show all s* subs and their multi candidates if any.
-    > ls CORE, :name(/^\&s/), :long
+    > ls CORE, :name(/^s/), :long
 
     # You can also filter on the objects themselves.
     # E.g., show only CORE types(class, role, or grammar)
@@ -41,7 +41,7 @@ EXAMPLES
     > ls CORE, :value(Class-ish)
 
     # Show only non-sub instances in CORE
-    > ls CORE, :name({$^k !~~ /^\&/}), :value({$^obj.DEFINITE})
+    > ls CORE, :value({$^obj.DEFINITE && $^obj !~~ Sub})
 
     # Show Str's methods that begins with 'ch'. 'll' is like 'ls' but with :long.
     > ll Str, :name(/^ch/)
@@ -52,15 +52,15 @@ EXAMPLES
     > ll Str, :name(/fmt/), :all
 
     # Specifying :gather returns a Seq of Pairs
-    > ls CORE, :name(/^\&sp/), :gather ==> { .value.&ls for $_ }()
+    > ls CORE, :name(/^sp/), :gather ==> { .value.&ls for $_ }()
 
 
     # Once you get a hold of a sub or a method, you can use &doc to open its
     # documentation in a browser.
     > doc &substr
 
-    > ls CORE, :name(/^\&s/), :numbered
-    > doc (ls CORE, :name(/^\&s/), :take(21))
+    > ls CORE, :name(/^s/), :numbered
+    > doc (ls CORE, :name(/^s/), :take(21))
 
 AUTHOR
 ======

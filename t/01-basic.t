@@ -4,7 +4,7 @@ use Test::Output;
 
 use P6Repl::Helper;
 
-plan 9;
+plan 10;
 
 module MyModule {
     our $myvar = 123;
@@ -53,6 +53,22 @@ is (output-from { ll &substr }).lines.join("\n") ~ "\n", q:to/END/, "testing ll 
     multi sub substr(\what)
     multi sub substr(\what, \from)
     multi sub substr(\what, \from, \chars)
+    END
+
+is (output-from { ls Hash, :name(/^<[a..z]>/) }).lines.join("\n") ~ "\n",
+   q:to/END/, "testing ls a built-in class";
+    &append
+    &categorize-list
+    &classify-list
+    &clone
+    &default
+    &dynamic
+    &gist
+    &keyof
+    &name
+    &of
+    &perl
+    &push
     END
 
 lives-ok { ll CORE };
