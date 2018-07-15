@@ -2,6 +2,10 @@ Revision history for P6Repl-Helper
 
 {{$NEXT}}
 
+0.0.3  2018-07-15T17:26:51-04:00
+    - Fix not being able to list a built-in class such as Hash or Array.
+    - Fix doc (when matching subs with :name, '&' is not needed).
+
 0.0.2  2018-07-08T16:35:16-04:00
     - Fix the bug of not showing candidates for subs in a module when :long
       is true.
