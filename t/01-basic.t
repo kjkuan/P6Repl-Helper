@@ -48,12 +48,22 @@ is (output-from { ls MyModule::MyClass, :long }).lines.join("\n"),
    "testing ll class";
 
 
-is (output-from { ll &substr }).lines.join("\n") ~ "\n", q:to/END/, "testing ll a sub";
-    proto sub substr($, $?, $?, *%)
-    multi sub substr(\what)
-    multi sub substr(\what, \from)
-    multi sub substr(\what, \from, \chars)
-    END
+# Older rakudo versions without return constraints
+my $without-return = q:to/END/;
+proto sub substr($, $?, $?, *%)
+multi sub substr(\what)
+multi sub substr(\what, \from)
+multi sub substr(\what, \from, \chars)
+END
+
+my $with-return = q:to/END/;
+proto sub substr($, $?, $?, *%)
+multi sub substr(\what --> Str:D)
+multi sub substr(\what, \from --> Str:D)
+multi sub substr(\what, \from, \chars --> Str:D)
+END
+
+is (output-from { ll &substr }).lines.join("\n") ~ "\n", $without-return | $with-return, "testing ll a sub";
 
 is (output-from { ls Hash, :name(/^<[a..z]>/) }).lines.join("\n") ~ "\n",
    q:to/END/, "testing ls a built-in class";
